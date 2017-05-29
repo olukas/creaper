@@ -4,7 +4,7 @@
 
     <groupId>org.wildfly.extras.creaper</groupId>
     <artifactId>creaper-parent</artifactId>
-    <version>1.5.1-elytron.DR18-SNAPSHOT</version>
+    <version>1.5.1-elytron.ER1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Creaper: Parent</name>
