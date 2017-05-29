@@ -75,11 +75,12 @@ public class AddClientSSLContextOnlineTest extends AbstractAddSSLContextOnlineTe
     }
 
     @Test
-    public void addDuplicateKeyManagerAllowed() throws Exception {
+    public void addDuplicateClientSSLContexAllowed() throws Exception {
         AddClientSSLContext addClientSSLContext = new AddClientSSLContext.Builder(CLIENT_SSL_CONTEXT_NAME)
+                .protocols("TLSv1.2")
                 .build();
         AddClientSSLContext addClientSSLContext2 = new AddClientSSLContext.Builder(CLIENT_SSL_CONTEXT_NAME)
-                .sessionTimeout(5)
+                .protocols("TLSv1.1")
                 .replaceExisting()
                 .build();
 
@@ -89,27 +90,23 @@ public class AddClientSSLContextOnlineTest extends AbstractAddSSLContextOnlineTe
         client.apply(addClientSSLContext2);
         assertTrue("The cleint ssl context should be created", ops.exists(CLIENT_SSL_CONTEXT_ADDRESS));
         // check whether it was really rewritten
-        checkAttribute(CLIENT_SSL_CONTEXT_ADDRESS, "session-timeout", "5");
+        checkAttribute(CLIENT_SSL_CONTEXT_ADDRESS, "protocols", Arrays.asList("TLSv1.1"));
     }
 
     @Test
     public void addFullClientSSLContext() throws Exception {
         AddClientSSLContext addClientSSLContext = new AddClientSSLContext.Builder(CLIENT_SSL_CONTEXT_NAME)
                 .cipherSuiteFilter("ALL")
-                .keyManagers(TEST_KEY_MNGR_NAME)
-                .trustManagers(TRUST_MNGR_NAME)
-                .maximumSessionCacheSize(0)
-                .sessionTimeout(0)
+                .keyManager(TEST_KEY_MNGR_NAME)
+                .trustManager(TRUST_MNGR_NAME)
                 .protocols(CLIENT_SSL_CONTEXT_PROTOCOL)
                 .build();
         client.apply(addClientSSLContext);
         assertTrue("The client ssl context should be created", ops.exists(CLIENT_SSL_CONTEXT_ADDRESS));
 
         checkAttribute("cipher-suite-filter", "ALL");
-        checkAttribute("key-managers", TEST_KEY_MNGR_NAME);
-        checkAttribute("trust-managers", TRUST_MNGR_NAME);
-        checkAttribute("maximum-session-cache-size", "0");
-        checkAttribute("session-timeout", "0");
+        checkAttribute("key-manager", TEST_KEY_MNGR_NAME);
+        checkAttribute("trust-manager", TRUST_MNGR_NAME);
         checkAttribute("protocols", Arrays.asList(CLIENT_SSL_CONTEXT_PROTOCOL));
     }
 
