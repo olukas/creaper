@@ -30,8 +30,8 @@
         <version.wildfly10.arquillian>1.1.0.Alpha1</version.wildfly10.arquillian>
         <!-- doesn't exist yet; update when there's a public release of WildFly 11 -->
         <version.wildfly11>11.0.0.Alpha1</version.wildfly11>
-        <version.wildfly11.core>3.0.0.Alpha10</version.wildfly11.core>
-        <version.wildfly11.arquillian>2.0.0.Final</version.wildfly11.arquillian>
+        <version.wildfly11.core>3.0.6.Final</version.wildfly11.core>
+        <version.wildfly11.arquillian>2.1.0.Final</version.wildfly11.arquillian>
 
         <managementPort.as7>9999</managementPort.as7>
         <managementPort.wildfly>9990</managementPort.wildfly>
@@ -400,7 +400,7 @@
         <profile>
             <id>wildfly10</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
 
             <properties>
@@ -450,7 +450,7 @@
             <!-- Wildfly 11 doesn't exist yet; update when there's a public release of WildFly 11 -->
             <id>wildfly11</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <activeByDefault>true</activeByDefault>
             </activation>
 
             <properties>
@@ -492,6 +492,11 @@
                 <dependency>
                     <groupId>org.wildfly.core</groupId>
                     <artifactId>wildfly-patching</artifactId>
+                    <version>${version.wildfly11.core}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.wildfly.core</groupId>
+                    <artifactId>wildfly-elytron-integration</artifactId>
                     <version>${version.wildfly11.core}</version>
                 </dependency>
             </dependencies>
