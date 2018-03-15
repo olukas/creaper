@@ -88,11 +88,15 @@ public class AddModule implements OnlineCommand {
             cmd.append(" --properties=").append(defaultJoiner.join(properties));
         }
 
+        System.out.println("LOGGING: before ctx.client.executeCli " + cmd.toString());
         ctx.client.executeCli(cmd.toString());
+        System.out.println("LOGGING: after ctx.client.executeCli");
 
         if (moduleXml == null && mainClass != null) {
             // module.xml was generated automatically, it might contain an error in the main-class element
+            System.out.println("LOGGING: before fixMainClassInModuleXml");
             fixMainClassInModuleXml(ctx.client);
+            System.out.println("LOGGING: after fixMainClassInModuleXml");
         }
     }
 

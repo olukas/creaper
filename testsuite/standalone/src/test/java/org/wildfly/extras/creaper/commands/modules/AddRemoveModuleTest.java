@@ -76,7 +76,8 @@ public class AddRemoveModuleTest {
 
     @Test
     public void addRemoveModuleTest() throws IOException, CommandFailedException, CliException, SAXException {
-        String directoryName = "directory with spaces";
+        //String directoryName = "directory with spaces";
+        String directoryName = "directory";
         if (client.version().lessThan(ServerVersion.VERSION_2_0_0)) {
             // AS7 doesn't accept paths with spaces
             directoryName = "directory_without_spaces";
@@ -84,15 +85,17 @@ public class AddRemoveModuleTest {
 
         File testJar1 = createTestJar("testJar1.jar", directoryName);
         File testJar2 = createTestJar("testJar2.jar", null);
+        System.out.println("testJar1.jar absolute path: " + testJar1.getAbsolutePath());
+        System.out.println("testJar2.jar absolute path: " + testJar2.getAbsolutePath());
         AddModule addModule = new AddModule.Builder(TEST_MODULE_NAME)
-                .resource(testJar1)
-                .resource(testJar2)
-                .resourceDelimiter(":")
+                                .resource(testJar1)
+                                .resource(testJar2)
+                .resourceDelimiter(";")
                 .dependency("org.hibernate")
                 .dependency("org.jboss.as.controller")
-                .mainClass("test.mainclass")
-                .property("foo", "bar")
-                .property("john", "doe")
+                                .mainClass("test.mainclass")
+                                .property("foo", "bar")
+                                .property("john", "doe")
                 .build();
         client.apply(addModule);
 
